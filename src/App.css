@@ -1,32 +1,66 @@
-.App {
+body {
+  display: flex;
+  flex-flow: column;
+  height: 100vh;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  flex-flow: column;
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+#main {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-grow: 1;
 }
 
-.App-link {
-  color: #61dafb;
+.environment {
+  display: flex;
+  flex-flow: column;
+  flex-grow: 1;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.title {
+  background-color: #666;
+  padding: 10px 0px;
+  font-size: 2em;
+  color: #ffffff;
+}
+
+.row {
+  display: flex;
+  flex-flow: row wrap;
+  flex-grow: 1;
+}
+
+.app {
+  border: 1px solid #111111;
+  flex-grow: 1;
+}
+.up {
+  background: linear-gradient(#01ff70, #2ecc40);
+}
+
+.down {
+  background: linear-gradient(#ff851b, #ff4136);
+}
+
+.unknown {
+  background: linear-gradient(#ff851b, #ffdc00);
+}
+
+.loading { 
+   animation: loadingAnimation 1s infinite;
+}
+
+@Keyframes loadingAnimation {
+  0%   { opacity : 1; } 
+  50%  { opacity : 0.75; } 
+  100% { opacity : 1; } 
+}
+
+.unknown {
+    background: linear-gradient(#FF851B, #FFDC00); 
 }
