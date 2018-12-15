@@ -1,32 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import './App.css';
 import axios from 'axios'
-// import { environments } from './config.js'
-
-const tenMins = 100000
- const environments = [
-    {name : "Demo",urls:[
-            {url: "http://localhost:8081/actuator/health", name: "GOE",interval:tenMins}, 
-            {url: "http://localhost:8081/actuator/health", name: "CDI",interval:tenMins}, 
-            {url: "http://localhost:8081/actuator/health", name: "WLTP",interval:tenMins}
-    ]},
-    {name : "IST",urls:[
-            {url: "http://localhost:8081/actuator/health", name: "GOE",interval:tenMins}, 
-            {url: "http://localhost:8081/actuator/health", name: "CDI",interval:tenMins}, 
-            {url: "http://localhost:8081/actuator/health", name: "WLTP",interval:tenMins}
-    ]},
-    {name : "Prod",urls:[
-            {url: "http://localhost:8081/actuator/health", name: "GOE",interval:tenMins}, 
-            {url: "http://localhost:8081/actuator/health", name: "CDI",interval:tenMins}, 
-            {url: "http://localhost:8081/actuator/health", name: "WLTP",interval:tenMins}
-    ]}
-]
+import { environments } from './config.js'
 
 class App extends Component {
   static defaultProps = {environments}
   createEnvironments = () => {
-      return this.props.environments.map(({name, urls}, index) => {
-        return <Environment name={name} urls={urls} key={index} />
+      return this.props.environments.map(({name, apps}, index) => {
+        return <Environment name={name} apps={apps} key={index} />
       })
   }
   render() {
@@ -38,21 +19,21 @@ class App extends Component {
   }
 }
 
-const Environment = ({name, urls}) => {
+const Environment = ({name, apps}) => {
     return (
         <div className="environment"> 
             <div className="title">{name}</div> 
             <div className="row">
-                {makeBoxes(urls)}
+                {makeBoxes(apps)}
             </div>
         </div>
     )
 }
 
-const makeBoxes = (boxes) => {
-    return boxes.map((box, index) => {
+const makeBoxes = (apps) => {
+    return apps.map((app, index) => {
         return (
-            <Box url={box.url} name={box.name} interval={box.interval} key={index} />
+            <Box url={app.url} name={app.name} interval={app.interval} key={index} />
         );
     });
 }
@@ -64,15 +45,12 @@ class Box extends Component {
         this.state = { status: "unknown", loading: true}
     } 
 
-    componentWillMount() {
-        this.checkHealth();
-    }
-
     componentWillUnmount() {
       clearInterval(this.timer)
     }
 
     componentDidMount() { 
+        this.checkHealth(); 
         this.timer = setInterval(() => this.checkHealth(), this.props.interval);
     }
 
